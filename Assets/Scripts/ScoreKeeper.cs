@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ScoreKeeper: MonoBehaviour {
 
@@ -16,14 +17,31 @@ public class ScoreKeeper: MonoBehaviour {
 
 	public static int newPts;
 
-//	public static int symVal = 1;
-//	public static int wrdVal = 1;
 	public static int symWrdVal = 1;
 	public static int seqVal = 1;
 	public static int prxVal = 1;
 
+	public static int symWrdMax = 100;
+	public static int seqMax = 100;
+	public static int prxMax = 1;
+
+	public static List<int> seqDiffMatch = new List<int>();
+
 	public static bool symFlag;
 	public static bool wrdFlag;
+
+	public static string quote ="";
+
+
+	// Use this for initialization
+	void Start () {
+
+		seqDiffMatch.Add (1);
+//		seqDiffMatch.Add (-1);
+//		seqDiffMatch.Add (9);
+		seqDiffMatch.Add (-9);
+
+	}
 
 	public static void ScoreMove() {
 
@@ -53,7 +71,7 @@ public class ScoreKeeper: MonoBehaviour {
 
 		if (symFlag == true || wrdFlag == true) {
 			symWrdVal++;
-			if (symWrdVal > 4) {
+			if (symWrdVal > symWrdMax) {
 				symWrdVal = 1;
 			}
 
@@ -65,10 +83,10 @@ public class ScoreKeeper: MonoBehaviour {
 
 		// CHECK FOR SEQUENCE
 
-		if ((HighLight.currentBlock.number - HighLight.previousBlock.number == 1) || (HighLight.currentBlock.number - HighLight.previousBlock.number == -9)) {
+		if (seqDiffMatch.Contains(HighLight.currentBlock.number - HighLight.previousBlock.number)) {
 			seqPts = seqVal;
 			seqVal++;
-			if (seqVal > 3) {
+			if (seqVal > seqMax) {
 				seqVal = 1;
 			}
 		}
@@ -78,14 +96,19 @@ public class ScoreKeeper: MonoBehaviour {
 			seqVal = 1;
 		}
 
+		// Number = Points Version
+
+//		seqPts = HighLight.currentBlock.number * symWrdVal;
+
+
 		// CHECK FOR PROXIMITY
 
 		newBlockLoc = HighLight.currentBlock.transform.position;
 		oldBlockLoc = HighLight.previousBlock.transform.position;
-		if (Vector3.Distance(newBlockLoc, oldBlockLoc) == 1) {
+		if (Vector3.Distance(newBlockLoc, oldBlockLoc) < 1.2) {
 			prxPts = prxVal;
 			prxVal++;
-			if (prxVal > 2) {
+			if (prxVal > prxMax) {
 				prxVal = 1;
 			}
 		}
@@ -94,7 +117,7 @@ public class ScoreKeeper: MonoBehaviour {
 			prxVal = 1;
 		}
 
-		// TALLY SCORE\
+		// TALLY SCORE
 
 		newPts = (symPts + wrdPts + seqPts + prxPts);
 		score = score + newPts;
@@ -108,10 +131,7 @@ public class ScoreKeeper: MonoBehaviour {
 
 
 
-	// Use this for initialization
-	void Start () {
-	
-	}
+
 	
 	// Update is called once per frame
 	void Update () {

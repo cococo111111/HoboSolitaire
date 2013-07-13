@@ -26,6 +26,9 @@ public class BlockCreator : MonoBehaviour {
 	public static int pointer = 0;
 	public static Vector3 blockLoc = new Vector3(-1.5f,0f,1.5f);
 
+	public static Bounce bounceI;
+
+	public static string quote = "test";
 
 	// Use this for initialization
 	void Start () {
@@ -36,6 +39,8 @@ public class BlockCreator : MonoBehaviour {
 		int wordBump = 1;
 		bool wordReset = false;
 		int numberID = 0;
+
+		bounceI = GetComponent<Bounce> ();
 
 		//make Block 100
 		
@@ -110,6 +115,7 @@ public class BlockCreator : MonoBehaviour {
 		//MAKE NEW BOARD
 
 		if (Input.GetKeyDown (KeyCode.N)) {
+
 			ClearBoard ();
 			Randomizer ();
 			PullBlocks ();
@@ -133,10 +139,8 @@ public class BlockCreator : MonoBehaviour {
 			boardList[i].transform.position = new Vector3(-10f,0,0);
 		}
 
+		//Empty out lists
 		boardList.RemoveRange (0,16);
-
-		//Empty out rList
-
 		rList.RemoveRange (0,16);
 
 
@@ -181,7 +185,7 @@ public class BlockCreator : MonoBehaviour {
 	}
 
 
-	public void MakeBoard() {
+	public static void MakeBoard() {
 
 		blockLoc = new Vector3(-1.5f,0f,1.5f);
 		int n = 0;
@@ -200,8 +204,70 @@ public class BlockCreator : MonoBehaviour {
 			
 			blockLoc.z = blockLoc.z - 1f;
 			blockLoc.x = -1.5f;
-		}	
-		
+		}
+
+//		foreach (Block b in boardList) {
+//			bounceI.ShakeThis (b.transform);
+//		}
+
+		if (rnd < 10) {
+			quote = "\"Thus the sun whose light and warmth we make use of " +
+				"\nevery day has its circumspectly discovered, eminent " +
+				"\nplaces in terms of the changing usability of what it " +
+					"\ngives us: sunrise, noon, sunset, midnight.\"";
+		}
+
+		else if (rnd < 20) {
+			quote = "\"Philosophy fails again and again in fulfilling the task: " +
+				"\nworking out the idea of a \"natural concept of world.\"\"";
+		}
+
+		else if (rnd < 30) {
+			quote = "\"Here the first step is to enumerate the things that are " +
+				"\n'in' the world: houses, trees, people, mountains, stars.\"";
+		}
+
+		else if (rnd < 40) {
+			quote = "\"So when we designate this entity with the term 'Dasein', " +
+				"\nwe are expressing not its \"what\" (as if it were a table, " +
+					"\nhouse or tree) but its Being.\"";
+		}
+
+		else if (rnd < 50) {
+			quote = "\"The act of hammering itself discovers the " +
+				"\nspecific \"handiness\" of the hammer.\"";
+		}
+
+		else if (rnd < 60) {
+			quote = "\"Time must be brought to light and genuinely grasped " +
+				"\nas the horizon of every understanding of being.\"";
+		}
+
+		else if (rnd < 70) {
+			quote = "\"However, the \"substance\" of human being is not spirit " +
+				"\nas the synthesis of body and soul: it is rather existence.\"";
+		}
+
+		else if (rnd < 80) {
+			quote = "\"Space is not in the subject, nor does that subject " +
+				"\nobserve the word \"as if\" it were in space. Rather, " +
+				"\nthe \"subject,\" correctly understood ontologically, " +
+					"\nDasein, is spatial in a primordial sense.\"";
+		}
+
+		else if (rnd < 90) {
+			quote = "\"You cannot heal a single human being, not even with" +
+				    "\npsychotherapy, if you do not first restore his " +
+					"\nrelationship to Being.\"";
+		}
+
+		else if (rnd < 101) {
+			quote = "\"When we are seeking the essence of \"tree,\" we have " +
+				"\nto become aware that That which pervades every tree, " +
+				"\nas tree, is not itself a tree that can be encountered " +
+					"\namong all the other trees.\"";
+		}
+
 	}	
 
 }
